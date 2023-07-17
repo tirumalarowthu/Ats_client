@@ -7,7 +7,7 @@ import { DeleteModel } from './DeleteModel'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchApplicants } from '../../Redux/applicantSlice'
 import { baseUrl } from '../baseUl'
-const statusOpt = ["HR Round", "Hiring Manager", "Technical Round", "Rejected", "On hold", "Selected"]
+const statusOpt = ["HR Round", "Hiring Manager", "Technical Round", "Rejected", "Online Assessment Test","On hold", "Selected"]
 const SingleApplicantView = () => {
     const [appData, setAppData] = useState({})
     const owners=useSelector(state=>state.adminList.adminList)
@@ -46,6 +46,16 @@ const SingleApplicantView = () => {
                     setLoading(false)
                     await axios.post(`${baseUrl}/change/${data.commentBy}/${data.nextRound}/${appData.name}`)
                     alert(`Email send to ${postData.nextRound} successfully`)
+                    if (appData.status === "Online Assessment Test") {
+                        try {
+                            await axios.post(`${baseUrl}/send/${appData.name}/${appData.email}`)
+                            alert(`Online Assessment Test link sent to ${appData.name} successfully.`)
+                        }
+                        catch (err) {
+                            alert(`Failed to send test link to ${appData.name}.`)
+                            console.log(err.message)
+                        }
+                    }
                     window.location.reload(false)
                 } catch (err) {
                     alert("Failed to send email.")

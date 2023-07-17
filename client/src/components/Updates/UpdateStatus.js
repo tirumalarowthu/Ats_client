@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { baseUrl } from '../baseUl'
 const UpdateStatus = ({ applicantdetails }) => {
     const changeDoneBy = JSON.parse(localStorage.getItem("AdminInfo")).name
-    const statusOpt = ["HR Round", "Hiring Manager", "Technical Round", "Rejected", "On hold", "Selected"]
+    const statusOpt = ["HR Round", "Hiring Manager", "Technical Round", "Rejected","Online Assessment Test", "On hold", "Selected"]
     const owners = useSelector(state => state.adminList.adminList)
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
@@ -34,7 +34,17 @@ const UpdateStatus = ({ applicantdetails }) => {
                     dispatch(fetchApplicants())
                     await axios.post(`${baseUrl}/change/${postData.commentBy}/${postData.nextRound}/${applicantdetails.name}`)
                     alert(`Email send to ${postData.nextRound} successfully`)
-                    navigate("/")
+                    if (postData.status ==="Online Assessment Test"){
+                        try{
+                            await axios.post(`${baseUrl}/send/${applicantdetails.name}/${applicantdetails.email}`)
+                            alert(`Online Assessment Test link sent to ${applicantdetails.name} successfully.`)
+                        }
+                       catch(err){
+                            alert(`Failed to send test link to ${applicantdetails.name}.`)
+                            console.log(err.message)
+                       }
+                    }
+                    navigate("/")                    
                 } catch (err) {
                     alert("Failed to send email.")
                     navigate("/")

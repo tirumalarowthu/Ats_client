@@ -62,5 +62,37 @@ sendMails.post("/change/:changeby/:name/:text", async (req, res) => {
         res.status(404).send("Email not found")
     }
 
+
+})
+//Send mail when applicant status is Online assessment test
+
+sendMails.post("/send/:name/:email", async (req, res) => {
+    const { email, name } = req.params
+    const mailOptions = {
+        from: "ATS-App <tirumalarowthuv@gmail.com>",
+        to: email,
+        subject: `Online Assessment Test Link.`,
+        html: `
+        <p>Hi ${name}</p>
+        <p>Congratulations on making it to the next round of our hiring process!</p>
+        <p>We are impressed by your candidature and would like to invite you for a Online Assessment Test.</p>
+        <p>Please follow below process to complete Online Assessment Test .</p>
+        <p style="font-weight: bold;">Test Link:</p>
+        <button style="padding:8px 16px;background-color:#90EE90;border-radius:10px"><a style="text-decoration:underline" href="http://13.234.48.54/">Click here</a></button>
+        <p>Please select candidate and then login with the following email id: ${email}</p>
+        <p>All the best</p>
+        <p>Please feel free to contact us if you have any questions or doubts</p>
+        <p>Thanks & Regards</p>
+        <p>Hr Team.</p>
+        `
+    }
+    transporter.sendMail(mailOptions, async (err, info) => {
+        if (err) {
+            res.send(err.message)
+        } else {
+            res.send("Email sent successfully " + info.response)
+        }
+    })
+
 })
 module.exports = sendMails
