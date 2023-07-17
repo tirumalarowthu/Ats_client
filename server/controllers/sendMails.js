@@ -10,25 +10,33 @@ const transporter = nodemailer.createTransport({
         pass: "dthqdtvsagsiuivp"
     }
 })
-///sending mail when applicant added .
-sendMails.post("/add/send/:text", async (req, res) => {
 
-    const { text } = req.params
-    const data = await Admin.find({}, { email: 1, _id: 0 })
+
+///sending mail when applicant added .
+sendMails.post("/add/send/:name/:role", async (req, res) => {
+
+    const { name, role } = req.params
+    const data = await Admin.find({ role: "Hiring Manager" }, { email: 1, _id: 0 })
     const emails = await data.map(admin => {
         return admin.email
     })
     const mailOptions = {
         from: "ATS-App <tirumalarowthuv@gmail.com>",
         to: emails,
-        subject: `New applicant ${text} added(Applicant-Tracking-System).`,
-        text: `Hi, I hope this email finds you well.New Applicant ${text} added successfully.`
+        subject: `New applicant ${name} added(Applicant-Tracking-System).`,
+        html: `
+        <p>Hi,</p>
+    <p>I hope this email finds you well.</p>
+    <p>I'm writing to let you know that a new applicant - ${name} has been added. The applicant is applying for the role of ${role}.</p>
+    <p>Thanks,</p>
+    <p>HR team.</p>
+  `
     }
     transporter.sendMail(mailOptions, async (err, info) => {
         if (err) {
             res.send(err.message)
         } else {
-            res.send("Email sent successfully" + info.response)
+            res.send("Email sent to Hiring Manager successfully." + info.response)
         }
     })
 })
@@ -55,5 +63,4 @@ sendMails.post("/change/:changeby/:name/:text", async (req, res) => {
     }
 
 })
-//to: ['Technicalmanagerp2f@gmail.com', 'Hiringmanagerp2f@gmail.com', 'hrpfsemi5@gmail.com', 'akshata8178@gmail.com'],
 module.exports = sendMails

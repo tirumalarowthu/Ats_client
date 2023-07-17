@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { fetchApplicants } from '../../Redux/applicantSlice';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../baseUl';
-const roles = ['MERN Stack Developer', 'React JS Developer', 'Node Js Developer', 'Python/Java Tester', 'Java Developer', 'Python Developer'];
+const roles = ["ML-Lead", "ML-Engineer", 'MERN Stack Developer', 'Web-dev lead', 'React JS Developer', 'Node Js Developer', 'Test Engieer', 'Java Developer', 'Python Developer', "VLSI Design Engineer", "Embedded Engineer","Others"];
 const qualifications = ['Master of Engineering', 'Master of Technology', 'Bachelor of Engineering', 'Bachelor of Technology', "Bachelor's degree", "Others"];
-const branches = ['Computer Science', 'Information Technology', 'Electronics and Communication', 'Others'];
+const branches = ['Computer Science Engineering', 'Information Technology', 'Electronics and Communication Engineering',"Electrical and Electronic Engineering","Mechanical Engineering", 'Others'];
 const AddApplicant = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -86,9 +86,7 @@ const AddApplicant = () => {
       }
       if (!formData.experience || formData.experience === "0") {
         errors.experience = 'Total experience is required';
-      } else if (!/^[0-9]+$/.test(formData.experience)) {
-        errors.experience = 'Years of experience should contain only digits';
-      } else if (formData.experience < 0 || formData.experience > 20) {
+      } else if (formData.experience < 0 || formData.experience > 30) {
         errors.experience = "Maximum experience is limited to 30 years"
       }
     }
@@ -110,12 +108,12 @@ const AddApplicant = () => {
         try {
           dispatch(fetchApplicants())
           alert(`New Applicant ${formData.name} Added Successfully`)
-          setLoading(false)
-          await axios.post(`${baseUrl}/add/send/${formData.name}`)
-          alert('Email send successfully')
+          await axios.post(`${baseUrl}/add/send/${formData.name}/${formData.role}`)
+          alert('Email send to Hiring Manager successfully.')
           navigate("/")
         } catch (err) {
           alert("Failed to send email.")
+          setLoading(false)
           navigate("/")
         }
       } catch (err) {

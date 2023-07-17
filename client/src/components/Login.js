@@ -22,7 +22,7 @@ const Login = ({ setIsLogin }) => {
             await axios.post(`${baseUrl}/admin/login/${formData.email}`, formData, config)
                 .then((res) => {
                     localStorage.setItem("AdminInfo", JSON.stringify(res.data))
-                    toast.success(`Welcome to ${res.data.name}`)
+                    toast.success(`You have successfully logged in.`)
                     setIsLogin(true)
                     navigate("/")
                     setLoading(false)
