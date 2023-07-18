@@ -21,4 +21,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag atsapp:latest
     - name: Push the Docker image
-      run: docker push atsapp
+      run: docker push tirumalarowthu/atsapp:latest
