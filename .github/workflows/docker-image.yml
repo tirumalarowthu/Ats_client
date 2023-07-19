@@ -19,6 +19,6 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag atsapp:latest
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/atsapp:latest
     - name: Push the Docker image
-      run: docker push tirumalarowthu/atsapp:latest
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/atsapp:latest
