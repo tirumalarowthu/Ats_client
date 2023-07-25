@@ -5,10 +5,10 @@ const moment = require('moment-timezone');
 /*************add applicant  **************/
 const addApplicant = asyncHandler(async (req, res) => {
     try {
-        const { name, email, mobile, role, status, qualification, passout, collegeName, resumeLink } = req.body;
+        const { name, email, mobile, role,area, status, qualification, passout, collegeName, resumeLink } = req.body;
 
         // Check if all required fields are present
-        const requiredFields = ['name', 'email', 'mobile', 'role', 'collegeName', 'qualification', 'passout', 'resumeLink'];
+        const requiredFields = ['name', 'email','area', 'mobile', 'role', 'collegeName', 'qualification', 'passout', 'resumeLink'];
         const missingFields = requiredFields.filter(field => !req.body[field]);
         if (missingFields.length > 0) {
             const errorMessage = `Missing fields: ${missingFields.join(', ')}`;
@@ -106,7 +106,7 @@ const ApplicantNextProcess = asyncHandler(async (req, res) => {
             nextRound: nextRound,
             status: status,
             $push: {
-                "comments": {
+                "comments": { 
                     comment: comment,
                     commentBy: commentBy,
                     cRound: cRound,

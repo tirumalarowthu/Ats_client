@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { fetchApplicants } from '../../Redux/applicantSlice'
 import { useNavigate } from 'react-router-dom'
-import { baseUrl } from '../baseUl'
+import { TES_URL, baseUrl } from '../baseUl'
 const UpdateStatus = ({ applicantdetails }) => {
     const changeDoneBy = JSON.parse(localStorage.getItem("AdminInfo")).name
-    const statusOpt = ["HR Round", "Hiring Manager", "Technical Round", "Rejected","Online Assessment Test", "On hold", "Selected"]
+    const role=JSON.parse(localStorage.getItem("AdminInfo")).role
+    const statusOpt =role === "Hiring Manager"? ["HR Round", "Hiring Manager","Online Assessment Test", "Technical Round", "Rejected", "On hold", "Selected"]:role==="HR" ?["HR Round", "Hiring Manager","Rejected", "On hold", "Selected"]:["HR Round", "Hiring Manager", "Technical Round"]
     const owners = useSelector(state => state.adminList.adminList)
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
@@ -38,6 +39,10 @@ const UpdateStatus = ({ applicantdetails }) => {
                         try{
                             await axios.post(`${baseUrl}/send/${applicantdetails.name}/${applicantdetails.email}`)
                             alert(`Online Assessment Test link sent to ${applicantdetails.name} successfully.`)
+                            //Register for online test in Test evaluation system
+                            await axios.post(`${TES_URL}/register`,{name:applicantdetails.name,email:applicantdetails.email,area:applicantdetails.area,atsId:applicantdetails._id})
+                            .then((res)=>console.log(res) )
+                            .catch(err=>console.log(err.message))
                         }
                        catch(err){
                             alert(`Failed to send test link to ${applicantdetails.name}.`)
@@ -90,8 +95,6 @@ const UpdateStatus = ({ applicantdetails }) => {
     const hideErrors = (e) => {
         setErrors({ ...errors, [e.target.name]: "" })
     }
-
-
     return (
         <div>
             <div>
@@ -136,8 +139,6 @@ const UpdateStatus = ({ applicantdetails }) => {
                             {errors.comment ? <p className='text-danger'>{errors.comment}</p> : null}
                         </div>
                     </div>
-
-
                     <div>
                         {
                             loading ? <button className="btn btn-info" type="button" disabled>
@@ -147,9 +148,7 @@ const UpdateStatus = ({ applicantdetails }) => {
                     </div>
                 </form>
             </div>
-
         </div>
     )
 }
-
 export default UpdateStatus

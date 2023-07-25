@@ -18,7 +18,7 @@ const Header = () => {
     }
     // Function to handle scroll event and update state
     const handleScroll = () => {
-        if (window.pageYOffset > 0) {
+        if (window.pageYOffset > 300) {
             setIsFixed(true);   
         } else {
             setIsFixed(false);

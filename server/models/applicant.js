@@ -26,6 +26,11 @@ const applicantSchema = mongoose.Schema({
         trim:true,
         require: [true, "college name is required"]
     },
+    area:{
+        type:String,
+        trim:true,
+        require:[true,"area is required"]
+    },
     qualification: {
         type: String,
         trim:true,

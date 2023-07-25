@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { fetchApplicants } from '../../Redux/applicantSlice';
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../baseUl';
-const roles = ["ML-Lead", "ML-Engineer", 'MERN Stack Developer', 'Web-dev lead', 'React JS Developer', 'Node Js Developer', 'Test Engieer', 'Java Developer', 'Python Developer', "VLSI Design Engineer", "Embedded Engineer","Others"];
+const roles = ["ML-Lead", "ML-Engineer", 'MERN Stack Developer', 'Web-dev lead', 'React JS Developer', 'Node Js Developer', 'Test Engieer', 'Java Developer', 'Python Developer', "VLSI Design Engineer", "Embedded Engineer", "Others"];
 const qualifications = ['Master of Engineering', 'Master of Technology', 'Bachelor of Engineering', 'Bachelor of Technology', "Bachelor's degree", "Others"];
-const branches = ['Computer Science Engineering', 'Information Technology', 'Electronics and Communication Engineering',"Electrical and Electronic Engineering","Mechanical Engineering", 'Others'];
+const branches = ['Computer Science Engineering', 'Information Technology', 'Electronics and Communication Engineering', "Electrical and Electronic Engineering", "Mechanical Engineering", 'Others'];
+const area = ['Software', 'VLSI', 'VLSI_Fresher', 'Embedded']
 const AddApplicant = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -18,6 +19,7 @@ const AddApplicant = () => {
     qualification: '',
     branch: '',
     role: '',
+    area: '',
     passout: '',
     resumeLink: '',
     isExperienced: '',
@@ -53,19 +55,17 @@ const AddApplicant = () => {
       errors.collegeName = "College name should only contain alphabets and spaces";
     }
 
-    if (!formData.qualification) {
-      errors.qualification = 'Qualification is required';
-    }
-    if (!formData.branch) {
-      errors.branch = 'Branch is required';
-    }
-    if (!formData.role) {
-      errors.role = 'Applied role is required';
+    const fieldsToValidate = ['qualification', 'branch', 'role', 'area'];
+
+    for (const field of fieldsToValidate) {
+      if (!formData[field]) {
+        errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      }
     }
     if (!formData.passout) {
       errors.passout = 'Passout year is required';
     } else if (!/^(200\d|201\d|202[0-3])/.test(formData.passout)) {
-      errors.passout = "Please enter valid passout year"
+      errors.passout = "Please enter valid passout year."
     }
     if (!formData.resumeLink) {
       errors.resumeLink = 'Resume link is required';
@@ -151,6 +151,14 @@ const AddApplicant = () => {
             {roles.map(r => <option key={r} value={r}>{r}</option>)}
           </select>
           {errors.role && <span className="text-danger">{errors.role}</span>}
+        </div>
+        <div className="form-group">
+          <label>Select Area for Online Test:</label>
+          <select name="area" value={formData.area} onChange={handleChange} className="form-select">
+            <option value="">---Select Area for Online Test---</option>
+            {area.map(a => <option key={a} value={a}>{a}</option>)}
+          </select>
+          {errors.area && <span className="text-danger">{errors.area}</span>}
         </div>
         <div className="form-group">
           <label>College Name :</label>

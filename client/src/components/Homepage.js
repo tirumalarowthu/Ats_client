@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchApplicants } from '../Redux/applicantSlice'
-import Footer from './Footer'
+// import Footer from './Footer'
 import App from './TableComponents/App'
 // import ApplicantsTable from './ApplicantComponents/ApplicantsTable'
 const Homepage = () => {
@@ -19,9 +19,9 @@ const Homepage = () => {
         <h4 className='text-center p-4'>Welcome to Applicant Tracking System</h4>
       </div>
       {
-        status === "loading" ? <div style={{ height: "100vh" }} className='text-center'>Applicants data is loading...</div> : <>
+        status === "loading" ? <div className='text-center'>Applicants data is loading...</div> : <>
           {
-            status === "success" ? <>{ApplicantData && ApplicantData.length > 0 ? <div style={{ minHeight: "80vh", overflow: "auto" }} className='container'>
+            status === "success" ? <>{ApplicantData && ApplicantData.length > 0 ? <div style={{ overflow: "auto" }} className='container'>
               <App ApplicantData={ApplicantData} />
             </div> : <div style={{ minHeight: "80vh" }} className='text-center'>Applicants list is empty.Please
               add applicants.</div>}</> : null
@@ -29,9 +29,9 @@ const Homepage = () => {
         </>
       }
 
-      <div>
+      {/* <div>
         <Footer />
-      </div>
+      </div> */}
     </div>
   )
 }
