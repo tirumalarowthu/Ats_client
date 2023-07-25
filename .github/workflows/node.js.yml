@@ -37,7 +37,7 @@ jobs:
     - name: Start Server
       working-directory: ./server
       run: npm start
-
+    - run : pm2 restart atsserver
     # - name: adding env file
     #   run: |
     #   touch .env
