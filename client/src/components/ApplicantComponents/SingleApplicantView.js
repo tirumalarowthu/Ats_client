@@ -30,7 +30,7 @@ const SingleApplicantView = () => {
             {
                 Object.keys(appData).length > 0 ? <>
                     <CCard className="mb-4 container">
-                        <CCardHeader className='text-center'><h5>Full details of the Applicant</h5> </CCardHeader>
+                        <CCardHeader className='text-center'><h4>Full details of the Applicant:</h4> </CCardHeader>
                         <CCardBody>
                             <CRow>
                                 <CForm className="row g-3 needs-validation">
