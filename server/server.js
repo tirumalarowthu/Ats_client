@@ -19,7 +19,9 @@ app.use("/", adminRoutes)
 app.use("/", applicantRoutes)
 //for emails
 app.use("/", sendMails)
-
+app.use("/api/check",(req,res)=>{
+    res.send('This is called continuous deployment and continuous integration')
+})
 
 //Frontend Integration 
 const _dirname = path.dirname("")

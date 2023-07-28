@@ -36,7 +36,7 @@ jobs:
 
     - name: Start Server
       working-directory: ./server
-      run: pm2 start server.js --name atsserver
+      run: pm2 restart atsapp
     # - run : pm2 restart atsserver
     # - name: adding env file let see
     #   run: |
