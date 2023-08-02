@@ -55,7 +55,7 @@ const applicantSchema = mongoose.Schema({
     status: {
         type: String,
         trim:true,
-        default: "New"
+        default: "HR Round" 
     },
     experience: {
         type: Number,
