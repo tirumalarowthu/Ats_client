@@ -7,9 +7,10 @@ const adminRoutes = require("./routes/adminRoutes")
 const applicantRoutes = require("./routes/applicantRoutes")
 const sendMails = require("./controllers/sendMails")
 const path = require("path")
+const offerLetter = require("./routes/offerLetter")
 app.use(express.json())
 
-app.use(cors())
+app.use(cors())   
 
 
 
@@ -22,8 +23,10 @@ app.use("/", sendMails)
 app.use("/api/check",(req,res)=>{
     res.send('This is called continuous deployment and continuous integration')
 })
+//for generate offer letter 
+app.use("/",offerLetter)
 
-//Frontend Integration 
+//Frontend Integration    
 const _dirname = path.dirname("")
 const builPath = path.join(_dirname, "../client/build");
 // app.use(express.static(builPath))

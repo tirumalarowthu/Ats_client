@@ -9,6 +9,7 @@ import Header from './components/Header';
 import UpdateOneApp from './components/Updates/UpdateOneApp';
 import Forgot from './components/Forgot';
 import SingleApplicantView from './components/ApplicantComponents/SingleApplicantView';
+import OfferLetter from './components/OfferLetter/OfferLetter';
 function App() {
   const [isLogin, setIsLogin] = useState(localStorage.getItem("AdminInfo"))
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/ChangeApplicantStatus" element={<UpdateApplicant />}></Route>
           <Route path="/update/one" element={<UpdateOneApp />} ></Route>
           <Route path="/view/:id" element={<SingleApplicantView />}></Route>
+          <Route path="/offerletter/:id" element={<OfferLetter />}></Route>
         </Routes>
       </BrowserRouter> : <BrowserRouter>
         <Routes>

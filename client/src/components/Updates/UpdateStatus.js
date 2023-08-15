@@ -29,27 +29,35 @@ const UpdateStatus = ({ applicantdetails }) => {
         if (validForm() === true) {
             const config = { headers: { "Content-Type": "Application/json" } }
             try {
-                await axios.put(`${baseUrl}/appicant/update/comments`, postData, config)
+                if (postData.status === "Selected") {
+                    postData.comment=postData.comment+` .To proceed with offer letter : <a href="${window.location.origin}/offerletter/${applicantdetails._id}">Click Here</a>`
+                    await axios.put(`${baseUrl}/appicant/update/comments`, postData, config)
+                }else{
+                    await axios.put(`${baseUrl}/appicant/update/comments`, postData, config)
+                }
                 try {
                     toast.success(`${applicantdetails.name} status updated successfully`)
                     dispatch(fetchApplicants())
                     await axios.post(`${baseUrl}/change/${postData.commentBy}/${postData.nextRound}/${applicantdetails.name}`)
                     alert(`Email send to ${postData.nextRound} successfully`)
-                    if (postData.status ==="Online Assessment Test"){
-                        try{
+                    if (postData.status === "Online Assessment Test") {
+                        try {
+
+                            //Register for online test in Test evaluation system
+                            await axios.post(`${TES_URL}/register`, { name: applicantdetails.name, email: applicantdetails.email, area: applicantdetails.area, atsId: applicantdetails._id })
+                                .then((res) => console.log(res))
+                                .catch(err => console.log(err.message))
+
                             await axios.post(`${baseUrl}/send/${applicantdetails.name}/${applicantdetails.email}`)
                             alert(`Online Assessment Test link sent to ${applicantdetails.name} successfully.`)
-                            //Register for online test in Test evaluation system
-                            await axios.post(`${TES_URL}/register`,{name:applicantdetails.name,email:applicantdetails.email,area:applicantdetails.area,atsId:applicantdetails._id})
-                            .then((res)=>console.log(res) )
-                            .catch(err=>console.log(err.message))
                         }
-                       catch(err){
+                        catch (err) {
                             alert(`Failed to send test link to ${applicantdetails.name}.`)
                             console.log(err.message)
-                       }
+                        }
                     }
-                    navigate("/")                    
+
+                    navigate("/")
                 } catch (err) {
                     alert("Failed to send email.")
                     navigate("/")

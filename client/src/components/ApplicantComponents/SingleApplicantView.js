@@ -119,7 +119,9 @@ const SingleApplicantView = () => {
                                                                 <td>{item.cRound}</td>
                                                                 <td>{item.commentBy}</td>
                                                                 <td>{new Date(item.Date).toString().substring(0, 25)}</td>
-                                                                <td>{item.comment}</td>
+                                                                <td> <div
+                                                                    dangerouslySetInnerHTML={{ __html:item.comment }}
+                                                                /></td>
                                                             </tr>)
                                                     }
                                                 </tbody>
