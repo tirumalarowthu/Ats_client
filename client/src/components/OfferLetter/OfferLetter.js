@@ -41,7 +41,7 @@ const OfferLetter = () => {
         // const date = "August 7 2023";
         const role = data.role;
         const location = "Bengalore";
-        const ref = "sibay:****";
+        const ref = "company:****";
         const salary = "(Indian Rupees Only)";
 
         const m_basic = Math.round(a_basic / 12);
@@ -121,7 +121,7 @@ const OfferLetter = () => {
             const result = window.confirm(message);
             if (result) {
                 // The user clicked "OK"
-                const response = await axios.get('http://localhost:9005/annexure', {
+                const response = await axios.get(`${baseUrl}/annexure`, {
                     params: requestData, // Pass the request data as URL parameters
                     responseType: 'blob', // Set the response type to 'blob' to handle binary data
                 });
