@@ -78,7 +78,7 @@ sendMails.post("/send/:name/:email", async (req, res) => {
         <p>We are impressed by your candidature and would like to invite you for a Online Assessment Test.</p>
         <p>Please follow below process to complete Online Assessment Test .</p>
         <p style="font-weight: bold;">Test Link:</p>
-        <button style="padding:8px 16px;background-color:#90EE90;border-radius:10px"><a style="text-decoration:underline" href="http://13.234.48.54/">Click here</a></button>
+        <button style="padding:8px 16px;background-color:#90EE90;border-radius:10px"><a style="text-decoration:underline" href="http://13.233.90.50/">Click here</a></button>
         <p>Please select candidate and then login with the following email id: ${email}</p>
         <p>All the best</p>
         <p>Please feel free to contact us if you have any questions or doubts</p>
