@@ -8,7 +8,7 @@ import { TES_URL, baseUrl } from '../baseUl'
 const UpdateStatus = ({ applicantdetails }) => {
     const changeDoneBy = JSON.parse(localStorage.getItem("AdminInfo")).name
     const role=JSON.parse(localStorage.getItem("AdminInfo")).role
-    const statusOpt =role === "Hiring Manager"? ["HR Round", "Hiring Manager","Online Assessment Test", "Technical Round", "Rejected", "On hold", "Selected"]:role==="HR" ?["HR Round", "Hiring Manager","Rejected", "On hold", "Selected"]:["HR Round", "Hiring Manager", "Technical Round"]
+    const statusOpt =role === "Hiring Manager"? ["HR Round", "Hiring Manager","Online Assessment Test", "Technical Round", "Rejected", "On hold", "Selected"]:role==="HR" ?["HR Round", "Hiring Manager",,"Online Assessment Test","Rejected", "On hold", "Selected"]:["HR Round", "Hiring Manager", "Technical Round"]
     const owners = useSelector(state => state.adminList.adminList)
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
@@ -47,7 +47,7 @@ const UpdateStatus = ({ applicantdetails }) => {
                             await axios.post(`${TES_URL}/register`, { name: applicantdetails.name, email: applicantdetails.email, area: applicantdetails.area, atsId: applicantdetails._id })
                                 .then((res) => console.log(res))
                                 .catch(err => console.log(err.message))
-
+                            //Send mail to the applicant for online
                             await axios.post(`${baseUrl}/send/${applicantdetails.name}/${applicantdetails.email}`)
                             alert(`Online Assessment Test link sent to ${applicantdetails.name} successfully.`)
                         }

@@ -50,7 +50,7 @@ const applicantSchema = mongoose.Schema({
     nextRound: {
         type: String,
         trim:true,
-        default: 'Areesh Kumar'
+        // default: 'Areesh Kumar'
     },
     status: {
         type: String,

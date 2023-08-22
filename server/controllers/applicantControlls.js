@@ -1,14 +1,21 @@
 const asyncHandler = require("express-async-handler")
 const Applicant = require("../models/applicant")
 const moment = require('moment-timezone');
+const Admin = require("../models/admin");
+// const findHr = async () => {
+//     const data = await Admin.find({ role: "HR" }, { name: 1, _id: 0 })
+//     const hrname = data[0].name
+//     console.log(hrname)
+// }
+// findHr()
 
 /*************add applicant  **************/
 const addApplicant = asyncHandler(async (req, res) => {
     try {
-        const { name, email, mobile, role,area, status, qualification, passout, collegeName, resumeLink } = req.body;
+        const { name, email, mobile, role, area, status, qualification, passout, collegeName, resumeLink } = req.body;
 
         // Check if all required fields are present
-        const requiredFields = ['name', 'email','area', 'mobile', 'role', 'collegeName', 'qualification', 'passout', 'resumeLink'];
+        const requiredFields = ['name', 'email', 'area', 'mobile', 'role', 'collegeName', 'qualification', 'passout', 'resumeLink'];
         const missingFields = requiredFields.filter(field => !req.body[field]);
         if (missingFields.length > 0) {
             const errorMessage = `Missing fields: ${missingFields.join(', ')}`;
@@ -20,9 +27,10 @@ const addApplicant = asyncHandler(async (req, res) => {
         if (applicantExists) {
             return res.status(400).json({ email: 'Applicant email already exists. Please enter a new email for new applicant.' });
         }
-
+        //find the name of the HR
+        const hrName = await Admin.find({ role: "HR" }, { name: 1, _id: 0 })
         // Create new applicant
-        const newApplicant = await Applicant.create(req.body);
+        const newApplicant = await Applicant.create({...req.body,nextRound:hrName[0].name});
         res.status(201).json(newApplicant);
     } catch (error) {
         console.error(error.message);
@@ -106,7 +114,7 @@ const ApplicantNextProcess = asyncHandler(async (req, res) => {
             nextRound: nextRound,
             status: status,
             $push: {
-                "comments": { 
+                "comments": {
                     comment: comment,
                     commentBy: commentBy,
                     cRound: cRound,

@@ -53,7 +53,7 @@ offerLetter.get("/annexure", async (req, res) => {
         m_GP,
         m_total_CTC
     } = req.query
-    const modifiedDoc = await patchDocument(fs.readFileSync("./routes/sibayOf.docx"), {
+    const modifiedDoc = await patchDocument(fs.readFileSync("./routes/Annexure.docx"), {
         patches: {
             name: {
                 type: PatchType.PARAGRAPH,

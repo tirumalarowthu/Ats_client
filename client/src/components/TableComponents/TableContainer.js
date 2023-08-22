@@ -91,7 +91,7 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
               prepareRow(row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr>
+                  <tr >
                     {row.cells.map((cell) => {
                       return (
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>

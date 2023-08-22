@@ -10,6 +10,8 @@ import UpdateOneApp from './components/Updates/UpdateOneApp';
 import Forgot from './components/Forgot';
 import SingleApplicantView from './components/ApplicantComponents/SingleApplicantView';
 import OfferLetter from './components/OfferLetter/OfferLetter';
+import ApplicantRegister from './components/ApplicantComponents/ApplicantRegister';
+import RegisterMsg from './components/ApplicantComponents/RegisterMsg';
 function App() {
   const [isLogin, setIsLogin] = useState(localStorage.getItem("AdminInfo"))
   return (
@@ -28,6 +30,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Login setIsLogin={setIsLogin} />}></Route>
           <Route path='/forgot' element={<Forgot />}></Route>
+          <Route path="/applicant/register" element={<ApplicantRegister />}></Route>
+          <Route path="/applicant/register/success" element={<RegisterMsg/>}></Route>
         </Routes>
       </BrowserRouter>}
 
