@@ -14,6 +14,8 @@ import ApplicantRegister from './components/ApplicantComponents/ApplicantRegiste
 import RegisterMsg from './components/ApplicantComponents/RegisterMsg';
 function App() {
   const [isLogin, setIsLogin] = useState(localStorage.getItem("AdminInfo"))
+  console.log("Now I am in Test_Dev Branch only.")
+  console.log("Check my pull request")
   return (
     <div >
       {isLogin ? <BrowserRouter>
