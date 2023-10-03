@@ -13,6 +13,7 @@ import OfferLetter from './components/OfferLetter/OfferLetter';
 import ApplicantRegister from './components/ApplicantComponents/ApplicantRegister';
 import RegisterMsg from './components/ApplicantComponents/RegisterMsg';
 function App() {
+  console.log("Hello world")
   const [isLogin, setIsLogin] = useState(localStorage.getItem("AdminInfo"))
   return (
     <div >
